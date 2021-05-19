@@ -1,0 +1,29 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <!--声明springmvc核心对象
+  访问地址  报错 IOException parsing XML document from ServletContext resource [/WEB-INF/springmvc-servlet.xml];
+  nested exception is java.io.FileNotFoundException: Could not open ServletContext resource [/WEB-INF/springmvc-servlet.xml]
+  错误原因：在servlet的init方法中，创建springmvc使用的容器对象WebApplicationContext
+  需要使用配置文件  配置文件默认路径 /WEB-INF/<servlet-name>-servlet.xml
+  -->
+  <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--自定义配置文件位置-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc-servlet.xml</param-value>
+    </init-param>
+    <!--服务器tomcat创建对象顺序，整数值，大于等于0，数字越小，越早创建-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <!--把一些请求交给指定的servlet处理-->
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+</web-app>
